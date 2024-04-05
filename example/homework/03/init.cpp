@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
     const int n = 1000;
     Kokkos::View<int*> view("View", n);
     Kokkos::parallel_for("InitView", n, KOKKOS_LAMBDA(const int i) {
-        view1(i) = i * i;
+        view(i) = i * i;
     });
 
   // create two additional views of same size and datatype
@@ -16,12 +16,12 @@ int main(int argc, char* argv[]) {
     Kokkos::View<int*> view_2("View2", n);
   // deep_copy
     Kokkos::Timer timer;
-    Kokkos::deep_copy(view_2, view_1);
+    Kokkos::deep_copy(view_1, view);
     double time_1 = timer.seconds();
   // user copy
-    timer.reset()
+    timer.reset();
     Kokkos::parallel_for("CopyView", n, KOKKOS_LAMBDA(const int i) {
-        view3(i) = view1(i);
+        view_2(i) = view(i);
     });
 
     double time_2 = timer.seconds();

@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
       Kokkos::fence();
     }
   // Output
-  printf("\nhello world\n");
+    printf("\nhello world\n");
   }
   Kokkos::finalize();
   MPI_Finalize();
